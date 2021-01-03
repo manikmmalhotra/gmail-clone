@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   border-bottom-width: 2px;
-  padding-right: 15px;
+  padding: 15px;
   min-width: 200px;
   cursor: pointer;
   color: grey;
@@ -17,4 +17,8 @@
 .section:hover {
   background-color: whitesmoke;
   border-width: 3px !important;
+}
+.section > h4 {
+  font-size: 14px;
+  margin-left: 15px;
 }
