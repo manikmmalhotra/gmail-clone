@@ -1,39 +1,54 @@
 import React from "react";
 import "./Header.css";
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import AppsIcon from "@material-ui/icons/Apps";
-import NotificationsIcon from "@material-ui/icons/Notifications";
+import MenuRoundedIcon from "@material-ui/icons/MenuRounded";
+import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
+import ArrowDropDownRoundedIcon from "@material-ui/icons/ArrowDropDownRounded";
+import AppsRoundedIcon from "@material-ui/icons/AppsRounded";
+import NotificationsRoundedIcon from "@material-ui/icons/NotificationsRounded";
 import { Avatar, IconButton } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "./features/userSlice";
+import { auth } from "./firebase";
 
-export default function Header() {
+const Header = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
+  const signOut = () => {
+    auth.signOut().then(() => dispatch(logout()));
+  };
+
   return (
     <div className="header">
-      <div className="header_left">
+      <div className="header__left">
         <IconButton>
-          <MenuIcon />
+          <MenuRoundedIcon />
         </IconButton>
         <img
-          src="https://i.pinimg.com/originals/d7/4e/60/d74e6036cb5b6e80d87b0a3fc77176c0.png"
-          alt="mail icon"
+          src="https://i.pinimg.com/originals/ae/47/fa/ae47fa9a8fd263aa364018517020552d.png"
+          alt=""
         />
       </div>
-
-      <div className="header_middle">
-        <SearchIcon />
-        <input placeholder="Search mail" type="text" />
-        <ArrowDropDownIcon className="header_inputCaret" />
+      <div className="header__middle">
+        <SearchRoundedIcon />
+        <input type="text" placeholder="Search E-mail" />
+        <ArrowDropDownRoundedIcon className="header__inputCaret" />
       </div>
-      <div className="header_right">
+      <div className="header__right">
         <IconButton>
-          <AppsIcon />
+          <AppsRoundedIcon />
         </IconButton>
         <IconButton>
-          <NotificationsIcon />
+          <NotificationsRoundedIcon />
         </IconButton>
-        <Avatar />
+        <Avatar
+          src={user?.photoURL}
+          onClick={signOut}
+          style={{ cursor: "pointer" }}
+        />
       </div>
     </div>
   );
-}
+};
+
+export default Header;
